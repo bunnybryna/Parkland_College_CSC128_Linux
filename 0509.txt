@@ -1,0 +1,999 @@
+--------------------------0205
+25Zh15750
+Whoami shows your username
+Startx
+Mozilla $ opens a web browser
+SSH shaula.csit.pakrland.edu
+
+Password
+less /etc/passwd
+Page up and down
+Use / to search
+Use ？To see them all
+q to exit the pager
+Ctrl c stops the program
+history shows the last two commands
+to move the "bzhao1" directory 
+cd ~bzhao1
+ls
+ls -la
+whatis cd
+cd ~ goes to your own home directory
+grep bzhao1 /etc/passwd
+grep bzhao1 /etc/passwd >day1.txt
+Whatis grep= print lines matching
+Grep=Search bzhao1 in the passwd folder
+> Means catch the output into the file
+cat day1.txt
+--------------------------0207
+Ctrl u delete the command
+man passwd
+man man
+Change password:passwd
+Which passwd tells you which version
+file /usr/bin/file
+ls -l ∼bzhao1 to see the folder
+read chapter 2,3,4
+grep bzhao1 ../../../../../etc/passwd
+ls -l *.txt
+
+changed to private: chmod 
+rwx rwx rwx, 6 0 0, 110 000 000
+read write execute
+chmod 600 day2.txt
+Permissions:
+1 – can execute
+2 – can write
+4 – can read
+The octal number is the sum of those free permissions, i.e.
+3 (1+2) – can execute and write
+6 (2+4) – can write and read
+Position of the digit in value:
+1 – what owner can
+2 – what users in the file group(class) can
+3 – what users not in the file group(class) can
+Examples:
+chmod 600 file – owner can read and write
+chmod 700 file – owner can read, write and execute
+chmod 666 file – all can read and write
+chmod 777 file – all can read, write and execute
+644 standard permission 
+4 is read
+5 is read/execute (execute is always needed for directories)
+6 is read/write
+7 is read, write, and execute 
+
+ls [-laidh]
+ls l:long a:show me all i:inode(index)number d:just show directory(no content) h:human readable
+ls -l |less(| is pile) send it to the pager
+ls -a
+.. is a hidden file
+ls -la |less
+ls -la |head -20 head output the beginning or ending of a file
+ls -la .bash_history
+wc .bash_history (word count)
+head -20 .bash_history
+history: shows history command
+!1317 (reenter the specified history command)
+wc -l .bash_history 
+history |wc -l
+
+touch 2day
+copy file and permission flow
+touch 2day
+ls -l 2day
+chmod 400 2day 
+cp 2day 2day2
+ls -l |grep 2day
+-r--------  1 bzhao1 student    0 Feb  7 14:01 2day
+-r--------  1 bzhao1 student    0 Feb  7 14:02 2day2
+history |wc then history >lab3.txt 
+or copy and chmod to change 
+
+--------------------------0212
+putty=> connection=>keep alive(set to 1 min)
+cp /etc/passwd . (. means to here, in the current directory)
+inode & data
+ls -l /etc/passwd passwd(why specify the path?because try to look up other directory without entering it)
+get two passwd files
+
+ls -l ~smauney/bad*
+when sean did:chmod 600 
+got permission denied: you can see the name but couldn't read it
+how can even hide the name?
+mkdir secret
+chmod 700 secret
+mv badstudents secret/
+ls -l ~smauney/secret/
+
+--------------------------0214
+chsh change log in shell
+log in shell: /bin/bash
+cat /etc/shells
+(/bin/bash
+/bin/tcsh
+/bin/csh
+/bin/ash
+/bin/ksh
+/bin/zsh)
+which chsh 
+echo $SHELL
+chmod 1711 four digit, the first 1 is set GID/UID
+a txt file can be 600, don't make it executable
+file .aretheyon.sh error
+./aretheyon.sh get an error because of chmod 600 
+bash ./aretheyon.sh will work
+
+mkdir dir1 dir2
+inode
+cat >dir1/fire 
+type then ctl+d
+/home/students/s/smauney/public_html/file1.txt needs permission on every folder
+if chmod folder 711
+but if you know the name of the target, you can still see the file, but can't open the folder
+if chmod 700 can't open the file
+if chmod 000, even the user self can't see the file, used as backup file
+
+--------------------------0219
+ls wk3
+ls -l wk3
+rm -rf wk3 (recursively force to remove)
+touch updated time stamp without touching data 
+diff passwd passwd_copy (shows no difference)
+
+hard copy
+user /group /other permission 
+705 never works group p >= other p
+drwxrwxrws : d=>file type, r=>read, w=>write, x=>execute
+ln passwd dir1/passwd_hard link psaswd to dir1 and call it ps_hard
+-rw-r--r-- 2 bzhao1 student 820472 Feb 19 12:13 passwd                2 is the number of hard links
+[bzhao1@shaula:~/wk3]$ ls -li passwd dir1/passwd_hard
+3154187 -rw-r--r-- 2 bzhao1 student 820472 Feb 19 12:13 dir1/passwd_hard
+3154187 -rw-r--r-- 2 bzhao1 student 820472 Feb 19 12:13 passwd
+these two files have the same i-node
+grep bzhao1 /etc/passwd >>passwd
+catch the output and append it to the bottom of the file
+tail dir1/passwd_hard got changed too
+touch afile
+ls -li
+3154232 -rw-r--r-- 1 bzhao1 student      0 Feb 19 12:37 afile
+mv afile afilemoved
+ls -li
+3154232 -rw-r--r-- 1 bzhao1 student      0 Feb 19 12:37 afilemoved
+same file, never has been" moved", just name changed
+need to be in the same partition, if not, the file got copied
+soft link: morel like a shortcut, a pointer
+data type:l (link)
+-s s for soft or symbolic
+[bzhao1@shaula:~/wk3]$ ln -s passwd_copy passwd_copy_soft
+lrwxrwxrwx 1 bzhao1 student     11 Feb 19 12:50 passwd_copy_soft -> passwd_copy
+the permission list shows everyone can delete but actually not
+what is the data for a soft link? name of the other link, the file can be on another partition
+self-healing
+if we delete the original file(pass_copy), then  cat passwd_copy_soft
+cat: passwd_copy_soft: No such file or directory
+history |grep copy to find the copy command
+!1191 to make the copy again
+you can cat soft link again
+--------------------------0221
+chapter 6 vi
+vi file1
+default mode is command mode
+i => input mode
+Esc => escape 
+esc : => last line mode
+esc : w write
+esc :wq quit
+
+https://www.cs.colostate.edu/helpdocs/vi.html
+
+* 	vi filename 	edit filename starting at line 1
+  	vi -r filename 	recover filename that was being edited when system crashed
+
+* 	:x<Return> 	quit vi, writing out modified file to file named in original invocation
+  	:wq<Return> 	quit vi, writing out modified file to file named in original invocation
+  	:q<Return> 	quit (or exit) vi
+* 	:q!<Return> 	quit vi even though latest changes have not been saved for this vi call
+
+* 	j or <Return>
+  [or down-arrow] 	move cursor down one line
+* 	k [or up-arrow] 	move cursor up one line
+* 	h or <Backspace>
+  [or left-arrow] 	move cursor left one character
+* 	l or <Space>
+  [or right-arrow] 	move cursor right one character
+* 	0 (zero) 	move cursor to start of current line (the one with the cursor)
+* 	$ 	move cursor to end of current line
+  	w 	move cursor to beginning of next word
+  	b 	move cursor back to beginning of preceding word
+  	:0<Return> or 1G 	move cursor to first line in file
+  	:n<Return> or nG 	move cursor to line n
+  	:$<Return> or G 	move cursor to last line in file
+
+* 	u 	UNDO WHATEVER YOU JUST DID; a simple toggle
+* 	i 	insert text before cursor, until <Esc> hit
+  	I 	insert text at beginning of current line, until <Esc> hit
+* 	a 	append text after cursor, until <Esc> hit
+  	A 	append text to end of current line, until <Esc> hit
+* 	o 	open and put text in a new line below current line, until <Esc> hit
+* 	O 	open and put text in a new line above current line, until <Esc> hit
+
+--------------------------0228
+:1,$s/Homer/Bryna search search from line 1 and replace Homer with Bryna
+:w! override the read only permission
+ctrl v+m => ^M
+:1,$s/^M// replace ^M with blank 
+or :%s/^M//
+~: change case
+SHIFT + ~ reverse the caps
+1,$ = % means entire file
+1G to the beginning
+/ + Enter seach for next
+/[Tt]hus search thus and Thus
+grep -in thus poem |wc count lines of including thus ignoring case 
+:%s/^Thus/rrrr/g replace line beginning with Thus with rrrr 
+J:joins two lines
+/:search
+:1,$s/old/new
+replaces old with new
+:1,$s/old/new/g
+replaces all occurances on the line of old with new
+:%s/old/new/g
+replaces all occurances everywhere of old with new
+
+type   :#,#s/old/new/g    where #,# are the line numbers of the range
+                               of lines where the substitution is to be done.
+Type   :%s/old/new/g      to change every occurrence in the whole file.
+Type   :%s/old/new/gc     to find every occurrence in the whole file,
+
+vi .vimrc set vi preferences
+vi .viminfo keeps history
+history | grep 
+--------------------------0305
+which vi
+-/usr/bin/vi   
+[bzhao1@shaula:~/viday3]$ ls -l /usr/bin/vi 
+lrwxrwxrwx 1 root root 3 Jun 13  2011 /usr/bin/vi -> vim*
+up arrow to get last line command
+:noh no highlight
+:%s/[Tt]he /rrrr /g    search The or the replace with rrrr globally
+
+vi ../.vimrc
+vi ../.viminfo
+
+vi lab
+cp ~smauney/public/poem 
+chmod
+remember to use vim!!!
+--------------------------shell redirection
+[bzhao1@shaula:~/viday3]$ echo $SHELL
+/bin/bash
+[bzhao1@shaula:~/viday3]$ echo $HOME 
+/home/students/b/bzhao1
+[bzhao1@shaula:~/viday3]$ whoami
+bzhao1
+[bzhao1@shaula:~/viday3]$ echo $USER
+bzhao1
+[bzhao1@shaula:~/viday3]$ set |grep PWD
+OLDPWD=/home/students/b/bzhao1/bin
+PWD=/home/students/b/bzhao1/viday3
+lowercase: variables I made, uppercase :key variables
+[bzhao1@shaula:~/viday3]$ class=iloveit
+[bzhao1@shaula:~/viday3]$ echo $class
+iloveit
+                                                                                              $0 $1   $2     $3
+shell reads from right to left then assign them to variables: ls file1 file2 file3 
+single tics: don't evaluate the variables
+double tics: ignore spaces between " " 
+$0 is the calling program and here is ./position.sh
+bash ./position.sh what ever (can run even though chmod 644)
+stdout ls -l /dev/pts
+stdin keyboard
+cat take input form keyboard, ctrl+ D ends typing
+> redir stdout
+ls -l /etc |less
+cat /etc/passwd |less
+= less </etc/passwd 
+cat /etc/passwd |grep jones|less
+cat /etc/passwd |grep jones|wc 
+ls -l >afile 
+ls -l 1>afile2
+almost same
+so 1 is optional
+0 - stdin
+1 - stdout
+2 - stderr
+2 is not, 2> redir standard error
+viday3.sh 1>gotit 2>not
+viday3.sh>/dev/null 2>not
+(dev/null is the black hole)
+viday3.sh 1>gotit 2>&1 redirect the std error to the std out 
+ when you use 2>&1 you are basically saying “Redirect the stderr to the same place we are redirecting the stdout
+filter
+sort demo |uniq >uniquedemo 
+sort won't work if COLL
+ls -l |sort +4 (sort by)
+--------------------------0307
+process 
+pas aux |grep smauney
+kill 30896 (pid)
+command 
+$(whoami)
+pas aux |grep ($whoami)
+if vi has crashed without writing, the swap file will be there
+vi! 
+grep jones /etc/passwd |tee teedfile |wc
+Tee command is used to store and view (both at the same time) the output of any other command.
+Tee command writes to the STDOUT, and to a file at a time as shown in the examples below.
+grep jones /etc/passwd |tee teedfile | grep C |tee teedC | wc 
+./somescript.sh >dev/null 2>afilenot   suck the right ones in the computer black hole and put wrong ones in a file 
+./somescript.sh >lookforafile 2>&1
+
+xeyes
+ctrl + z
+jobs
+[1]   Stopped                 xeyes
+[2]   Stopped                 xeyes
+[3]-  Stopped                 xeyes
+[4]+  Stopped                 xeyes
+bg 
+fg enter then ctrl + c to bring it to the front and kill a job
+kill -9 23922 
+kill -H 23922 -H is to hang up server 
+xeyes & push it to the background
+xkill to click any program you want to kill
+ctrl + z :stop
+ctrl + c : kill
+? is one unknown character
+* anything
+filename globbing: ls lab[1-9]*.txt
+[bzhao1@shaula:~/viday1]$ type test  
+test is a shell builtin
+[bzhao1@shaula:~/viday1]$ which test
+/usr/bin/test
+cat /etc/shells
+[bzhao1@shaula:~/viday1]$ test -f /etc/passwd
+[bzhao1@shaula:~/viday1]$ echo $?
+0
+if there is a file in etc/passwd, 0 is true means yes
+priority of execution : 1. user decide 2.alias 3. shell built-in 4. PATH searched in order
+alias
+echo $PATH
+bash-4.2$ script.sh
+bash: script.sh: command not found
+bash-4.2$ ./script.sh
+save me
+bash-4.2$ bash ./script.sh
+save me
+bash-4.2$ PATH=$PATH:./
+bash-4.2$ script.sh
+save me
+bash-4.2$ 
+
+--------------------------0312
+bash-4.2$ . .alias
+bash-4.2$ alias
+alias ls='/bin/ls -F --color=auto'
+alias rm='/bin/rm -i'
+alias who='/usr/bin/who -THul'
+/etc/profile
+interactive login Shell reads .bash_profile
+different prompt for Shell and Shaula
+interactive nonlogin Shell read .bashrc
+vi .bashrc
+test -f ${HOME}/.bash_profile && . ${HOME}/.bash_profile
+bash-4.2$ . .bashrc
+[bzhao1@corona:/mnt/shaula/students/b/bzhao1]$
+priority of execution: 1  you decide 2 alias 3 shell built-in 4 PATH searched in order
+/bin/rm afile
+(rm = /bin/rm -i)
+type test:test is a shell builtin
+which test:/usr/bin/test
+test -f : for a regular file
+[bzhao1@corona:/mnt/shaula/students/b/bzhao1]$ test -f /etc/passwd
+[bzhao1@corona:/mnt/shaula/students/b/bzhao1]$ echo $?
+0 means true 
+always test a file before use it
+test doesn't come out a result
+echo $PATH
+/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/lib64/kde4/libexec:/usr/lib64/qt/bin:/usr/share/texmf/bin:/home/students/b/bzhao1/bin:/home/students/b/bzhao1/bin
+on shaula 
+echo $PATH
+/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/lib64/java/bin:/usr/lib64/kde4/libexec:/usr/lib64/qt/bin:/usr/share/texmf/bin:.:/home/students/b/bzhao1/bin
+(a . included)
+vi mailfile
+mail -s "testing mail and redir stdin" bzhao1@shaula.csit.parkland.edu <mailfile
+mail
+
+--------------------------0314
+parameter.sh
+#!/bin/bash
+
+echo You entered $# parameters at the command line 
+echo this program is $0 and is the parameter '$0'
+echo right now '$1' is $1
+
+echo
+echo we are shifting now 
+read nothin # the read stops the script and takes user input into a variable
+
+shift
+echo
+echo now you have $# parameters left
+echo right now '$1' is $1
+--------------------------
+shift is a bash built-in which kind of removes arguments in beginning of the argument list. 
+ps aux
+a = show processes for all users
+u = display the process's user/owner
+x = also show processes not attached to a terminal
+ps aux | grep bzhao1
+ps aux | grep ^bzhao1 means start with bzhao1
+ps aux | grep $(whoami) command substitution 
+(chapter 10)
+--------------------------
+for forsub.sh
+#!/bin/bash
+
+clear
+echo -------------------------------------------
+
+# first real loop
+for i in mary had a little lamb and smelly carpet 
+        do
+                echo $i
+                sleep 1 
+        done
+echo rrrrrr
+
+# do the same thing, uses command substution
+for i in $(cat mary.txt) # this is a flile on disk that gets concatenated.
+        do
+                echo $i
+                sleep 1
+        done
+echo rrrrrr
+echo ---------------------------------------------
+echo ding ding ding
+
+echo $?
+127 is command not found
+
+--------------------------0326
+shell script starts with #!/bin/bin
+if 
+fi
+-------------------------- springday.sh
+#!/bin/bash
+
+#my first if statement
+#to be sure to "man test"
+
+#showing that the user should enter: springday.sh green
+if test $1 = green
+        then
+                echo yep a springday is supposed to be green!
+        else
+                echo rrrrrr this springday is $1
+fi
+
+if no fi at the end
+./springday.sh: line 14: syntax error: unexpected end of file
+two types of test
+[ ] or test
+prompt user for input, use read
+echo -n please enter your favorite color:
+read color
+-------------------------- read.sh
+#!/bin/bash
+
+echo -n please enter your favorite color:
+read color
+
+if test $color = green
+        then echo green huh?
+else
+        echo rrrrrr you should try green
+
+fi
+
+    There is a difference between single and double quotes.  Values in single quotes will be taken verbatim.  Values in double quotes will be expanded before they are used.  Examples:
+        user@host:~$ drink=cola
+        user@host:~$ order='I want a glass of $drink'
+        user@host:~$ echo $order
+        I want a glass of $drink
+        user@host:~$ order="I want a glass of $drink"
+        user@host:~$ echo $order
+        I want a glass of cola
+--------------------------0402
+while and until loop
+-a logical and &&
+-o logical or ||
+--------------------------while1.sh
+#!/bin/bash
+# this initializes the loop variable
+color=notgreen
+
+#can use either a while a until
+#while test $color != green
+until test $color = green
+do
+        echo -n Please enter green or start right in this loop :
+        read color
+done
+--------------------------for1.sh
+#!/bin/bash
+
+# for i in [list]
+# make a file mary.txt and put data in it then use command substitution
+
+#for i in Mary had a little lamb
+for i in $(cat mary.txt)
+do
+                echo $i
+                sleep 1
+        done
+
+$(ls) file substitution
+ 
+-----------------------proj1.sh
+bzhao1proj1.sh
+#!/bin/bash
+
+echo Project 1 Report
+
+echo "----------------------------"
+date
+whoami
+echo "----------------------------"
+echo CURRENT USERS:
+who
+echo "----------------------------"
+echo CURRENT PROCESSES:
+w
+echo "----------------------------"
+echo Please enter a user name to find:
+read username
+while test $username != "exit"
+do
+        for i in $(cat /etc/passwd)
+        do
+                # if the line starts with $username
+                if [[ $i =~ ^$username+ ]]
+                        then 
+                                echo yes!
+                                finger $username
+                                exit
+                fi
+
+        # done for for loop
+        done
+        echo try again or type exit to quit
+        read username
+# done for while loop
+done
+--------------------------0409
+-e test if exists
+-f test if a regular file
+-d test if a directory
+-l test if a link
+--------------------------ifthen.sh
+#!/bin/bash
+
+echo -n Please enter a file:
+#file is a builtin utility, don't name a variable file
+read whatfile
+# if [ -e $whatfile ]
+if test -e $whatfile
+then
+        echo dingdingding
+else
+        echo rrrr
+fi
+--------------------------fun.sh
+#!/bin/bash                                                                                               
+                                                                                                          
+myFn() {                                                                                                  
+                                                                                                          
+                                                                                                          
+        echo dingdingding                                                                                 
+        echo $1                                                                                           
+                                                                                                          
+                                                                                                          
+                                                                                                          
+}                                                                                                         
+echo At the command line you enter '$1' and it was $1                                                     
+                                                                                                          
+                                                                                                          
+                                                                                                          
+#myFn "this is the $1 from INSIDE the function call"  this will print bryna(command argument)             
+# below will print $1, since \ will escape $                                                              
+#just like '' preserves the literal value of each character withinin it(lose its meaning)                 
+myFn "this is the \$1 from INSIDE the function call"                                                      
+                                                                                                          
+# below will print 'bryna', since ''are within ""                                                         
+myFn "this is the '$1' from INSIDE the function call"                  
+
+--------------------------0411
+project3
+test case: root, /etc, .bash_history
+
+
+--------------------------proj2.sh
+#!/bin/bash
+
+if [ $# -lt 1 ]
+then 
+        echo rrrr
+        echo Please try again, next time with an argument.
+        exit 1
+fi
+echo Great job!
+echo Please enter your name:
+read username
+echo How are you $username?
+
+echo You have entered $# positional parameters at the command line.
+echo The program you called was named $0.
+echo Press enter to get started:
+read nothing
+
+while [ $# -gt 1 ]
+#$@ stores an array of command arguments
+#for var in "$@"
+#won't work since $# will be 0 and $1 print nothing
+do
+        # (())permits arithmetic expansion and evaluation
+        # $(($#-$i))wihtout $(())will print 5-0 instead of 5 
+        echo $#
+        sleep 1
+        shift
+        #(( i=i+1 ))
+done
+echo $#
+sleep 1
+echo The last command line argument that you entered is $1.
+
+-------------------------proj3.sh
+#!/bin/bash
+
+errorFn()
+{
+        # -ne echo on the same line
+        echo -ne $1
+        echo ", please try again!"
+        exit 1
+}
+
+#1. check the number of command arguments
+if [ ! $# -eq 2 ]
+then
+        errorFn "You must enter exactly 2 command line arguments"
+fi
+
+#2. check if typing is correct
+echo You did enter 2 command line arguments, they were:
+echo $1 and $2
+echo Is this correct?
+echo Please enter N or n if it is not, Y or y if it is:
+read answer
+if [ $answer = N -o $answer = n ]
+then
+        errorFn "Program exiting because you said you had a typo"
+elif ! [ $answer = Y -o $answer = y ]
+then
+        errorFn "You did not enter a Y or an N"
+fi
+
+#3. check if two files exist or are directories
+if ! [ -e $1 -a -e $2 ]
+then
+        errorFn "Sorry, one or both files not located"
+else
+        echo Both files do exist, so we will continue.
+fi
+
+if [ -d $1 -o -d $2 ]
+then
+        errorFn "Sorry, one or both files that you entered was a directory"
+fi
+
+#4. check the ownership
+if [ -O $1 -a -O $2 ]
+then
+        echo You own both files.
+elif [ -O $1 ]
+then
+        echo You only own the first file. 
+        echo $1
+elif [ -O $2 ]
+then
+        echo You only own the second file.
+        echo $2
+else
+        echo You own neither of the files.
+fi
+
+# 5. compare date of two files 
+# -nt new than, -ot older than
+if [ $1 -nt $2 ]
+then
+        echo $1 is newer.
+else
+        echo $2 is newer.
+fi
+
+--------------------------0416
+--------------------------letum.sh
+#!/bin/bash
+
+#initialize letVar
+#letVar=0
+
+echo -n Enter what value  you want to start at 
+read letVar
+
+#for i in Mary had a little lamb
+for i in $(cat datafile)
+do
+        echo $i
+        echo $letVar
+        sleep 1
+        #read nothing
+        #let reassign value of the variable
+        #letVar must already exist
+        #note there is no space!!!
+        let letVar=$letVar+5
+
+done
+
+    Classes of Characters in Regular expressions
+    $ ; | * ? ' " ` [ ] ( ) $ < > ^ { } # / \ % ! ~
+    Quoting Special Characters \ 
+                           --------------escape /\/ / 
+    Delimiters, usually a / - mark start and end of regular expression
+    Special Characters - default to finding the longest string that is a match
+        a space is a regular char in a REGEX and does not need to be quoted
+        . dot - matches any single character
+        square brackets [ ]- define a character class
+                            --------------/\*/ or /[*]/ means to find a star
+        caret is special in 2 ways
+            match the beginning of a line
+            caret following a square bracket [^) means NOT cont ained within the list of character class. [^a-zA-Z] means any character that is NOT a letter. Note how a hyphen - indicate s a range in character class.
+                            --------------/^[0-9] / means a line not starting with a number and then follows a space
+        Inside of a character class, \ and * are regular characters, not special characters.
+        * asterisk, zero or more occurrences of a match of the regular expression that comes before it. .* matches any str ing.
+                             ------------can be 0, a*thing will return to athing, thing(a can be 0), aaaaaaaathing 
+        $ end of a line.
+        \> = end of word, and \< = beginning of word. 
+                             ---------------/\<[Tt]hing\>/ means Thing or thing
+    | means or separator. example /Q|M/ finds a Q or an M. pression
+
+
+--------------------------0418
+sed editor
+can't overwrite your file
+.set file can't be executed
+
+There once was an older man of Esser,
+whose knowledge grew lesser and lesser.
+It at last grew so small,
+he knew nothing at all,
+and now he is a college professor.
+--------------------------
+sed -f gone.sed man_from_esser
+There once was an older man of Esser,
+It at last grew so small
+He knew nothing at all
+And now he is a Gone Fishin.
+--------------------------
+s/college professor/Gone Fishin/
+s/[eE]sser/Ferndale California/g
+s/lesser/bigly/g
+
+There once was an older man of Ferndale California,
+whose knowledge grew lFerndale California and lFerndale California.
+It at last grew so small,
+he knew nothing at all,
+and now he is a Gone Fishin.
+
+!bigly won't show since lesser include esser, and will become Ferndale California
+--------------------------
+s/college professor/Gone Fishin/g
+s/lesser/bigly/g
+s/[eE]sser/Ferndale California/g
+
+There once was an older man of Ferndale California,
+whose knowledge grew bigly and bigly.
+It at last grew so small,
+he knew nothing at all,
+and now he is a Gone Fishin.
+
+-------------------------- sed lab
+
+wget www.csit.parkland.edu/~smauney/csc128/outline.shtml
+wget www.csit.parkland.edu/~smauney/default.css
+
+w donefile.html
+
+http://www.csit.parkland.edu/~bzhao1/outline.shtml
+
+s/[Ss]ean/Bryna/g
+s/smauney at parkland.edu/brynazhao@gmail.com/g
+s/smauney/bzhao1/g
+s/[Mm]auney/Zhao/g
+s/smauney@parkland.edu/bzhao1@stu.parkland.edu/g
+s/CSC128: Outline Spring 18/Bryna Zhao/g
+s/L<\/span>inks, Reading, Class Overview:/A<\/span>ssignments this week:/g
+s/<b>//g
+s/<\/b>//g
+
+w donefile.html
+--------------------------0423
+awk
+is designed for pulling data out of text file
+first column is $1
+entire sheet is $0
+
+$! ~ /Make/ {print NR, $}
+-get rid of the legend( look at column1, if Make is found, don't print it)
+
+tar:tape archive tool
+vi tardir/file
+-c create
+tar -cvf demo1.tar file1 file2 file3 tardir/
+gzip demo1.tar (zip)
+ls -l demo1.tar*(from 10k to 725)
+gunzip demo1.tar.gz(unzip)
+tar -czvf demo1.tgz file1 file2 file3 tardir/
+ls -lh demo1.t*
+demo1.tgz(715)
+tar will overwrite your newer version with the older one
+solution: create a sub-directory before tar
+
+tar lab: note that work from your bin
+
+find -maxdepth 1(means only look at the present directory)
+mtime:modify time(when data is changed)
+ctime:when inode is changed
+-type d
+find -maxdepth 3 -type d -name etc
+
+find -maxdepth 1 -newer older
+
+------------------------------------------0425
+------------------------------------------exam3.sh
+#!/bin/bash
+echo Please enter the name of your date file:
+read datafile
+#echo $(cat $datafile)
+#outer loop to go through entire data file
+for i in $(cat $datafile)
+do 
+        #echo $i
+        correct=no
+        #inner loop to guest each number 5 times
+        for j in 1 2 3 4 5
+        do
+
+                echo Please guess a number:
+                read number
+                if [ $number = Exit -o $number = exit ]
+                then
+                        echo "Thank you, exit."
+                        exit 10
+                fi
+                if [ $number -lt $i ]
+                then
+                        echo "Please go higher."
+                elif [ $number -gt $i ]
+                then
+                        echo "Plase go lower."
+                else
+                        echo "Yep, you got it!Move on to the next number."
+                        correct=yes
+                        break
+                fi
+
+        done
+        if [ $correct = no ]
+        then
+                echo "Sorry, you did not guess the right number. Move on to the next number."
+
+        fi
+done
+----------------------------------------0430
+known_hosts
+from shaula to www
+ssh-keygen -t rsa
+(passphrase is associated with , override password)
+ls -l (you will see id_rsa, id_rsa.pub, known_hosts)
+sftp www
+put id_rsa.pub
+quit
+ssh www
+cd .ssh
+mv authorized_keys
+----------------------------------------0507
+at: one time
+crontab: many times
+[bzhao1@corona:/mnt/shaula/students/b/bzhao1]$ at 12:17 
+warning: commands will be executed using /bin/sh
+at> pwd
+at> whoami
+at> echo MMMMM meat
+at> <EOT>
+job 1 at Mon May  7 12:17:00 2018
+[bzhao1@corona:/mnt/shaula/students/b/bzhao1]$ 
+ctrl + D
+[bzhao1@corona:/mnt/shaula/students/b/bzhao1]$ atq
+1       Mon May  7 12:17:00 2018 a bzhao1
+2       Mon May  7 12:18:00 2018 a bzhao1
+at -c 2(the job number)
+
+mail
+q
+run atq and see nothing since jobs are run 
+cron.allow cron.deny at.allow at.deny
+[bzhao1@corona:/mnt/shaula/students/b/bzhao1]$ cd /etc
+[bzhao1@corona:/etc]$ ls -l |grep cron
+drwxr-xr-x  2 root root     4096 Sep  7  2012 cron.d/
+drwxr-xr-x  2 root root     4096 Feb 25  2016 cron.daily/
+drwxr-xr-x  2 root root     4096 Sep  7  2012 cron.hourly/
+drwxr-xr-x  2 root root     4096 Sep  7  2012 cron.monthly/
+drwxr-xr-x  2 root root     4096 Sep  7  2012 cron.weekly/
+
+minute	hour	   mday	month	wday 	command_to run
+0-59	       0-23	   1-31	1-12	        *	        any command
+$ 35 12 7 5 * echo works here on MOnday the 7th 
+----------------------------------------0509
+id shows which group you are in
+GID gid
+[bzhao1@shaula:~]$ grep smauney /etc/passwd
+smauney:x:503:200:Sean Mauney,B132,353-2004,:/home/staff/smauney:/bin/bash
+smauney1:x:7841:201:Sean Mauney:/home/students/s/smauney1:/bin/bash
+
+[bzhao1@shaula:~]$ groups         => shows groups
+student users fuse plugdev 
+
+chgrp vs newgrp
+chgrp: chgrp change the group ownership of a file 
+newgrp: open a subshell with a new GID. Note that you type exit to get back to your original login group
+[bzhao1@shaula:~/lastday]$ chgrp plugdev afile
+[bzhao1@shaula:~/lastday]$ ls -l
+total 0
+-rw-r--r-- 1 bzhao1 plugdev 0 May  9 12:11 afile
+
+[bzhao1@shaula:~/lastday]$ newgrp fuse
+you should logout of your account when you leave the lab, or else someone like me can go in and edit your .bash_profile and remove your PATH variable and make it so you can't run any commands. so long story short you should really log out.
+[bzhao1@shaula:~/lastday]$ id
+uid=9450(bzhao1) gid=107(fuse) groups=201(student),100(users),107(fuse),130(plugdev)
+[bzhao1@shaula:~/lastday]$ touch afile2
+[bzhao1@shaula:~/lastday]$ ls -l
+total 0
+-rw-r--r-- 1 bzhao1 plugdev 0 May  9 12:11 afile
+-rw-r--r-- 1 bzhao1 fuse    0 May  9 12:18 afile2
+
+password-protected group
+gpasswd
+gpasswd -A smauney csc128-class
+
+ls -ld lastday
+chgrp users lastday (change lastday's group to users)
+
+[bzhao1@shaula:~/lastday]$ touch ~smauney/lastday/bzhao1
+touch: cannot touch `/home/staff/smauney/lastday/bzhao1': Permission denied
+chmod 2775 lastday/ (set gid)
+2000    (the setgid bit).  Executable files with this bit set will run with effective gid set to the gid of the file owner.
+[bzhao1@shaula:~/lastday]$ ls -ld ~smauney/lastday/      
+drwxrwsr-x 2 smauney users 4096 May  9 12:31 /home/staff/smauney/lastday//
+[bzhao1@shaula:~/lastday]$ touch ~smauney/lastday/bzhao1 (went through)
+
+lab 
+newgrp csc128-class 
+password:dude11
+then chgrp csc128-class file3 
+
+
+
+
